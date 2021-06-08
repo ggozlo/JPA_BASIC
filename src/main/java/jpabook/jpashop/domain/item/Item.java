@@ -4,11 +4,13 @@ import jpabook.jpashop.domain.Category;
 import jpabook.jpashop.exception.NotEnoughStockExcoption;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@BatchSize(size = 100) // 대상 엔티티에 대한 쿼리문은 배치사이즈 100이 적용되게 된다
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "dtype")

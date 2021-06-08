@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -25,10 +26,10 @@ public class Order {
     private Member member ;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @BatchSize(size = 3) // 특정 부분에만 배치사이즈 적용, Order를 통해 orderItems를 조회할때 적용된다 컬렉션에만 적용 가능
     private List<OrderItem> orderItems = new ArrayList<>();
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "delivery_id")
     private Delivery delivery;
 
     private LocalDateTime orderDate;

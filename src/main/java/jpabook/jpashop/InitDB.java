@@ -16,7 +16,7 @@ public class InitDB {
     private final InitService initService;
 
 
-    @PostConstruct
+    @PostConstruct // 기본적으로 시작하면서 값을 넣고싶다면 초기화가 완료된 시점에 넣어줘야함
     public void init() {
         initService.dbInit1();
         initService.dbInit2();

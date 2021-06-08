@@ -3,6 +3,7 @@ package jpabook.jpashop.repository;
 import jpabook.jpashop.domain.Member;
 import jpabook.jpashop.domain.Order;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.BatchSize;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
@@ -95,6 +96,25 @@ public class OrderRepository {
     }
 
 
+    public List<Order> findAllWithItem() {
+        return entityManager.createQuery(
+                "select distinct o from Order o" +
+                        " join fetch o.member m " +
+                        " join  fetch o.delivery d " +
+                        " join  fetch o.orderItems oi " +
+                        "join  fetch oi.item i ", Order.class)
+//                .setFirstResult(1).setMaxResults(100) // 넣어도 안먹힌다, 로그에 컬렉션 페치랑 같이쓰면 applying memory 로그가 뜬다 - 메모리에서 페이징 한다는 뜻(성능 저하)
+                .getResultList();
+    }
+
+
+    public List<Order> findAllWithMemberDelivery(int offset, int limit) {
+        return entityManager.createQuery(
+                "select o from Order o" +
+                        " join fetch o.member" +
+                        " join fetch o.delivery", Order.class)
+                .setFirstResult(offset).setMaxResults(limit).getResultList();
+    } // 페이징용 to One 관계만 페치 전역 배치사이즈를 잡았다면 페치조인을 안해도 어느정도 최적화가 되지만 페치조인이 좋다
 }
 
 
