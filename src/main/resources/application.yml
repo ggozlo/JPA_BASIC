@@ -12,6 +12,10 @@ spring:
         # show_sql: true
         format_sql: true
         default_batch_fetch_size: 100
+#    open-in-view: false
+# osiv 가 화성화 되면 entitymanager 가 트랜잭션이 종료되도 view에서 렌더링후 반환될때까지 유휴하게 된다
+# 편의적인 이점은 분명하지만 커넥션이 고갈될 수 있는 단점이 있어 성능을 우선한다면 사용하지 않는것지 옳다
+
 logging.level:
   org.hibernate.SQL: debug
 #  org.hibernate.type: trace

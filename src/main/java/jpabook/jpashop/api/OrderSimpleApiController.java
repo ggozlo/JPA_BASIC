@@ -55,6 +55,7 @@ public class OrderSimpleApiController {
     public List<OrderSimpleQueryDto> ordersV4() {
         return orderSimpleQueryRepository.findOrderDtos();
     }
+    // jpql의 결과를 바로 dto로 만들어서 반환시킬수 있다.
 
     @Data
     static class SimpleOrderDto {
